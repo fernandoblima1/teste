@@ -1,0 +1,6 @@
+package com.ati.seidmsautistic.enums;
+
+public enum Status {
+  SENT_TO_CRAS, APPROVED_BY_CRAS, SUSPENDED_BY_CRAS, REJECTED_BY_CRAS, SENT_TO_SEID, APPROVED_BY_SEID,
+  SUSPENDED_BY_SEID, REJECTED_BY_SEID,
+}
