@@ -2,7 +2,7 @@ spring:
   jpa:
     show-sql: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   datasource:
     url: jdbc:mysql://localhost:3306/seid_cia_db?createDatabaseIfNotExist=true
     username: root

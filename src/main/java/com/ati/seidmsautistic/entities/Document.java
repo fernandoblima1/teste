@@ -20,7 +20,6 @@ public class Document {
   private UUID id;
   private String name;
   private Long size;
-  private String fileType;
   @ManyToOne
   @JoinColumn(name = "solicitation_id")
   private Solicitation solicitation;

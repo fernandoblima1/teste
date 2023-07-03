@@ -21,7 +21,7 @@ public interface DocumentRepository extends JpaRepository<Document, UUID> {
 
   Optional<Document> findBySolicitationAndDocType(Solicitation solicitation, DocType docType);
 
-  List<Document> findAllBySolicitationAndDocType(Solicitation solicitation, DocType docType);
+  List<Optional<Document>> findAllBySolicitationAndDocType(Solicitation solicitation, DocType docType);
 
   void deleteAllBySolicitationAndDocType(Solicitation updatedSolicitation, DocType docType);
 

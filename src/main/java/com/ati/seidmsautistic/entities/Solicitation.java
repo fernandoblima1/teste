@@ -30,7 +30,6 @@ public class Solicitation {
   private User user;
 
   // Details to business rules
-  private Boolean Bpc;
   private Boolean minorOldAplicant;
   private Boolean statementOfResponsibility;
 
