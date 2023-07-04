@@ -7,7 +7,7 @@ Para rodar a aplicação siga os seguintes passos:
 3.  Nesta pasta você deverá encontrar um arquivo JAR;
 4.  Execute o seguinte comando: "java -jar nomeDoArquivo.jar";
 5.  Uma vez executado os endpoints estarão disponíveis para consumo;
-6.  Acesse o **[Swagger](https://github.com/filipedeschamps/rss-feed-emitter/issues/119)** da aplicação para ver os endpoints disponíveis e aquilo que eles esperam e como respondem.
+6.  Acesse o **[Swagger](http://localhost:8080/swagger-ui/index.html#/)** da aplicação para ver os endpoints disponíveis e aquilo que eles esperam e como respondem.
 
 ## Endpoints
 
