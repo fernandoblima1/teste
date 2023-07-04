@@ -132,6 +132,30 @@ public class SolicitationService {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Solicitation not found");
   }
 
+  public ResponseEntity<Object> suspendSolicitation(SolicitationEditDto solicitationEditDto) {
+    Optional<Solicitation> optionalSolicitation = solicitationRepository
+        .findById(solicitationEditDto.getSolicitationId());
+    if (optionalSolicitation.isPresent()) {
+      Solicitation solicitation = optionalSolicitation.get();
+      solicitation.setGeneralObservation(solicitationEditDto.getObservationGeneral());
+      solicitation.setStatus(Status.SUSPENDED);
+      solicitation.setRejectedAt(LocalDateTime.now());
+      List<Document> optionalDocumentList = documentService.findAllDocument(solicitation.getSolicitationId());
+      if (!(optionalDocumentList == null)) {
+        for (Document document : optionalDocumentList) {
+          setObservation(document, DocType.ID, solicitationEditDto.getObservationIdentification());
+          setObservation(document, DocType.MEDICALCERTIFICATE, solicitationEditDto.getObservationmedicalCertificate());
+          setObservation(document, DocType.PICTURE, solicitationEditDto.getObservationPicture());
+          setObservation(document, DocType.RESIDENCY, solicitationEditDto.getObservationResidency());
+          setObservation(document, DocType.COMPLEMENTARY, solicitationEditDto.getObservationComplementary());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(solicitationRepository.save(optionalSolicitation.get()));
+      }
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Documents not found");
+    }
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Solicitation not found");
+  }
+
   private void setObservation(Document document, DocType docType, String observation) {
     if (document.getDocType() == docType) {
       document.setObservation(observation);
