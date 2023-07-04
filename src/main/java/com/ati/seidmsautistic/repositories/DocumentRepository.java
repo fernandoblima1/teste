@@ -25,4 +25,8 @@ public interface DocumentRepository extends JpaRepository<Document, UUID> {
 
   void deleteAllBySolicitationAndDocType(Solicitation updatedSolicitation, DocType docType);
 
+  @Query("SELECT d FROM Document d WHERE d.solicitation.id = :solicitationId AND d.docType = :docType")
+  Optional<List<Document>> findBySolicitationIdAndDocType(@Param("solicitationId") UUID solicitationId,
+      @Param("docType") DocType docType);
+
 }
