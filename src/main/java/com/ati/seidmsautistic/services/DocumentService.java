@@ -4,6 +4,7 @@ import com.ati.seidmsautistic.entities.Document;
 import com.ati.seidmsautistic.entities.Solicitation;
 import com.ati.seidmsautistic.enums.DocType;
 import com.ati.seidmsautistic.enums.Status;
+import com.ati.seidmsautistic.exceptions.AppError;
 import com.ati.seidmsautistic.repositories.DocumentRepository;
 import com.ati.seidmsautistic.repositories.SolicitationRepository;
 import java.io.IOException;
@@ -180,9 +181,8 @@ public class DocumentService {
 
         return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
       }
+      throw new AppError("Documento não encontrado.");
     }
-
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    throw new AppError("Documento não encontrado.");
   }
-
 }

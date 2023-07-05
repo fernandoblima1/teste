@@ -4,14 +4,14 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://localhost:3306/seid_cia_db?createDatabaseIfNotExist=true
-    username: root
-    password: SuperM45t3r?
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  liquibase:
-    enabled: false
-  flyway:
-    enabled: false
+    url: jdbc:mysql://172.30.89.161:3306/seid_cia_db?createDatabaseIfNotExist=true
+    username: admin
+    password: senha123
+    # driver-class-name: com.mysql.cj.jdbc.Driver
+  # liquibase:
+  #   enabled: false
+  # flyway:
+  #   enabled: false
   sql:
     init:
       mode: always

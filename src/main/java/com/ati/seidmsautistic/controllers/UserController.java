@@ -3,6 +3,7 @@ package com.ati.seidmsautistic.controllers;
 import com.ati.seidmsautistic.dtos.SolicitationDto;
 import com.ati.seidmsautistic.entities.Document;
 import com.ati.seidmsautistic.entities.Solicitation;
+import com.ati.seidmsautistic.exceptions.AppError;
 import com.ati.seidmsautistic.services.DocumentService;
 import com.ati.seidmsautistic.services.SolicitationService;
 
@@ -36,7 +37,7 @@ public class UserController {
   private final DocumentService documentService;
 
   @Operation(summary = "Envia uma nova solicitação de CIA(Carteira de Identificação do Autista)")
-  // Post sendNewSolicitation()
+
   @PostMapping("/cia")
   public ResponseEntity<Object> postNewPassSolicitation(@ModelAttribute @Validated SolicitationDto solicitationDto,
       @RequestParam(name = "complementar", required = false) List<MultipartFile> complementary,
@@ -46,14 +47,24 @@ public class UserController {
     Solicitation solicitation = new Solicitation();
     BeanUtils.copyProperties(solicitationDto, solicitation);
 
-    return solicitationService.saveNewSolicitation(solicitation, identification, picture, medicalCertificate, residency,
-        complementary);
+    try {
+      return ResponseEntity.status(HttpStatus.CREATED)
+          .body(solicitationService.saveNewSolicitation(solicitation, identification, picture, medicalCertificate,
+              residency,
+              complementary));
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
   }
 
   @Operation(summary = "Retorna uma solicitação de CIA pelo cpf do usuário")
   @GetMapping
   public ResponseEntity<Object> getSolicitation(@RequestParam("cpf") String cpf) {
-    return solicitationService.findSolicitationByUserCpf(cpf);
+    try {
+      return ResponseEntity.status(HttpStatus.OK).body(solicitationService.findSolicitationByUserCpf(cpf));
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
   }
 
   @Operation(summary = "Retorna a lista de documentos associados a uma solicitação")
@@ -74,9 +85,13 @@ public class UserController {
       @RequestParam(name = "foto", required = false) MultipartFile picture,
       @RequestParam(name = "residencia", required = false) MultipartFile residency,
       @RequestParam(name = "certificadoMedico", required = false) MultipartFile medicalCertificate) {
-    return solicitationService.updateCiaSolicitation(solicitation,
-        identification, picture, medicalCertificate,
-        residency, complementary);
+    try {
+      return ResponseEntity.status(HttpStatus.OK).body(solicitationService.updateCiaSolicitation(solicitation,
+          identification, picture, medicalCertificate,
+          residency, complementary));
+    } catch (AppError e) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
   }
 
   @Operation(summary = "Realiza downloa de um documento pelo id do documento")
@@ -85,7 +100,4 @@ public class UserController {
   public ResponseEntity<byte[]> downloadFile(@RequestParam UUID documentId) throws IOException {
     return documentService.downloadDocument(documentId);
   }
-  // Post resortSolicitation()
-
-  // Get validateCard()
 }
